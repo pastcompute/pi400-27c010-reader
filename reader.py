@@ -18,7 +18,7 @@
 # DISCLAIMER: I am not a software engineer, this is horrible code
 #             But it works! Please feel free to re-write!
 # 
-
+# hacked again by @pastcompute to instead work with a 27C010 2021-12-01
 
 import RPi.GPIO as GPIO
 import time, re
