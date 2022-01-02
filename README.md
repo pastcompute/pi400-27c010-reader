@@ -10,6 +10,8 @@ Rough diagram of pinout:
 
 ![Pinouts](eprom-reader-pinout.png)
 
+Note that pins 3&5 have hard wired pullup resistors and thus have to be used for CE# and OE# pins only.
+
 Photo of quick and dirty circuit on connected to Pi400:
 
 ![Breadboard picture](eprom-reader-breadboard.png)
