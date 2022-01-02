@@ -15,3 +15,5 @@ Note that pins 3&5 have hard wired pullup resistors and thus have to be used for
 Photo of quick and dirty circuit on connected to Pi400:
 
 ![Breadboard picture](eprom-reader-breadboard.png)
+
+Added CC license because the original article on instructables was also CC
