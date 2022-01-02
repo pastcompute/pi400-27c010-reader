@@ -1,5 +1,6 @@
 #!/bin/bash
 
+BINOUT="$1"
 
 ADDR_LINES=( 17 27 22 10 9 11 5 6 18 23 8 24 13 15 14 19 26 ) 
 DATA_LINES=( 4 3 2 21 20 16 12 1 )
@@ -12,13 +13,14 @@ function as_byte() {
   bit=0
   for dq in ${DATA_LINES[@]} ; do
     v=$(sed -n -e 's/GPIO '$dq': level=\([01]\).*/\1/p' <<< "$RAW")
-    ans="${ans}$v"
+    # We need to reverse the bit order here ...
+    ans="$v${ans}"
     bit=$((bit+1))
   done
   ch=$(bc <<< "obase=16; ibase=2; $ans")
   cn=$(bc <<< "obase=10; ibase=2; $ans")
   cx='\x'$ch
-  echo -n -e $cx >> dump.bin
+  echo -n -e $cx >> "$BINOUT"
   if [ $cn -lt 32 -o $cn -gt 126 ] ; then cx="." ; fi
   echo $ans $(printf $cx ) $ch
 }
@@ -64,9 +66,9 @@ for a in $OE $CE ${ADDR_LINES[@]} ; do
   raspi-gpio set $a op pu dl
 done
 
-echo -n > dump.bin
+echo -n > "$BINOUT"
 OPS=( dl dh )
-for byte in {0..131072} ; do
+for byte in {0..131071} ; do
   bytebits=$(printf "%17b" $(bc <<< "ibase=10; obase=2; $byte")|sed 's@ @0@g')
   #echo $bytebits
   bit=16 # note address bits in rev order of what we need
@@ -81,10 +83,12 @@ for byte in {0..131072} ; do
   # CE then OE
   raspi-gpio set $CE dl
   # 150 ns
-  sleep 0.01
+  #sleep 0.01
   raspi-gpio set $OE dl
-  sleep 0.01
+  #sleep 0.01
+  #dump_all
   echo $(printf "%08x" $byte) $(as_byte $D)
+  # echo "Step..." ; read dummy
   raspi-gpio set $OE dh
   raspi-gpio set $CE dh
 done
