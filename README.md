@@ -6,8 +6,10 @@ Inspired by https://www.instructables.com/Raspberry-Pi-Python-EEPROM-Programmer/
 
 See https://hackaday.io/project/182779-late-90s-gps-time-unit-repair-1024-week-bug-fix/log/201888-reverse-engineering-first-steps for context
 
-[Rough diagram of pinouts](eprom-reader-pinouts.png)
+Rough diagram of pinout:
 
+![Pinouts](eprom-reader-pinout.png)
 
-Example:
+Photo of quick and dirty circuit on connected to Pi400:
 
+![Breadboard picture](eprom-reader-breadboard.png)
